@@ -1,0 +1,122 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.unigames</groupId>
+    <artifactId>parent-pom</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0</version>
+    <name>UniGames Parent POM</name>
+    <description>Includes organizational common configurations for a Maven project in UniGames.</description>
+
+    <scm>
+        <url>https://github.com/UniGames/parent-pom</url>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/UniGames/parent-pom/issues</url>
+    </issueManagement>
+
+    <!-- Private repo on S3 -->
+    <distributionManagement>
+        <repository>
+            <id>unigames-release-s3</id>
+            <name>UniGames Release Repository powered by AWS S3</name>
+            <url>s3://maven-repo.unigamesdev.com/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>unigames-snapshot-s3</id>
+            <name>UniGames Snapshot Repository powered by AWS S3</name>
+            <url>s3://maven-repo.unigamesdev.com/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>unigames-release-s3</id>
+            <name>UniGames Release Repository powered by AWS S3</name>
+            <url>s3://maven-repo.unigamesdev.com/releases</url>
+            <releases>
+                <enabled>true</enabled>
+                <checksumPolicy>fail</checksumPolicy>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>unigames-snapshot-s3</id>
+            <name>UniGames Snapshot Repository powered by AWS S3</name>
+            <url>s3://maven-repo.unigamesdev.com/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <checksumPolicy>fail</checksumPolicy>
+                <!-- Update interval: 10 minutes -->
+                <updatePolicy>interval:10</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- We use Java 8 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.3</version>
+                    <configuration>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                    </configuration>
+                </plugin>
+
+                <!-- web.xml is not needed because we are using Servlet 3.0 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>2.6</version>
+                    <inherited>true</inherited>
+                    <configuration>
+                        <failOnMissingWebXml>false</failOnMissingWebXml>
+                    </configuration>
+                </plugin>
+
+                <!-- Deploy sourcecode -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.4</version>
+                    <inherited>true</inherited>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <extensions>
+            <!-- Build extension to make the s3:// scheme work -->
+            <extension>
+                <groupId>org.springframework.build</groupId>
+                <artifactId>aws-maven</artifactId>
+                <version>5.0.0.RELEASE</version>
+            </extension>
+        </extensions>
+    </build>
+</project>
