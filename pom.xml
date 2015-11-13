@@ -6,7 +6,7 @@
     <groupId>com.unigames</groupId>
     <artifactId>parent-pom</artifactId>
     <packaging>pom</packaging>
-    <version>1.1</version>
+    <version>1.1.1</version>
     <name>UniGames Parent POM</name>
     <description>Includes organizational common configurations for a Maven project in UniGames.</description>
 
@@ -23,45 +23,15 @@
     <distributionManagement>
         <repository>
             <id>unigames-release-s3</id>
-            <name>UniGames Release Repository powered by AWS S3</name>
+            <name>UniGames Release Repository powered by AWS S3 in Global Region</name>
             <url>s3://maven-repo.unigamesdev.com/releases</url>
         </repository>
         <snapshotRepository>
             <id>unigames-snapshot-s3</id>
-            <name>UniGames Snapshot Repository powered by AWS S3</name>
+            <name>UniGames Snapshot Repository powered by AWS S3 in Global Region</name>
             <url>s3://maven-repo.unigamesdev.com/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
-
-    <repositories>
-        <repository>
-            <id>unigames-release-s3</id>
-            <name>UniGames Release Repository powered by AWS S3</name>
-            <url>s3://maven-repo.unigamesdev.com/releases</url>
-            <releases>
-                <enabled>true</enabled>
-                <checksumPolicy>fail</checksumPolicy>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>unigames-snapshot-s3</id>
-            <name>UniGames Snapshot Repository powered by AWS S3</name>
-            <url>s3://maven-repo.unigamesdev.com/snapshots</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                <checksumPolicy>fail</checksumPolicy>
-                <!-- Update interval: 10 minutes -->
-                <updatePolicy>interval:10</updatePolicy>
-            </snapshots>
-        </repository>
-    </repositories>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -117,13 +87,5 @@
             </plugins>
         </pluginManagement>
 
-        <extensions>
-            <!-- Build extension to make the s3:// scheme work -->
-            <extension>
-                <groupId>org.springframework.build</groupId>
-                <artifactId>aws-maven</artifactId>
-                <version>5.0.0.RELEASE</version>
-            </extension>
-        </extensions>
     </build>
 </project>
