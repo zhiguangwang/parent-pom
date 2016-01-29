@@ -6,7 +6,7 @@
     <groupId>com.unigames</groupId>
     <artifactId>parent-pom</artifactId>
     <packaging>pom</packaging>
-    <version>2</version>
+    <version>3</version>
     <name>UniGames Parent POM</name>
     <description>Includes organizational common configurations for a Maven project in UniGames.</description>
 
@@ -24,12 +24,12 @@
         <repository>
             <id>unigames-release-s3</id>
             <name>UniGames Release Repository powered by AWS S3 in Global Region</name>
-            <url>s3://maven-repo.unigamesdev.com/releases</url>
+            <url>s3://maven.unigamesdev.com/releases</url>
         </repository>
         <snapshotRepository>
             <id>unigames-snapshot-s3</id>
             <name>UniGames Snapshot Repository powered by AWS S3 in Global Region</name>
-            <url>s3://maven-repo.unigamesdev.com/snapshots</url>
+            <url>s3://maven.unigamesdev.com/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 

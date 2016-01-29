@@ -10,6 +10,6 @@ Includes organizational common configurations for a Maven project.
 <parent>
     <groupId>com.unigames</groupId>
     <artifactId>parent-pom</artifactId>
-    <version>2</version>
+    <version>3</version>
 </parent>
 ```
